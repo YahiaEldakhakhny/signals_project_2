@@ -1,6 +1,8 @@
 %   Load sound file
 
 % Get the path of the sound file from user
+clc 
+clear sound;
 path = input('Enter the full path of the file including extension with quotations ');
 
 % Get the array of sound samples and frequency
@@ -9,17 +11,7 @@ path = input('Enter the full path of the file including extension with quotation
 % Taking first channel of sound file
 x = xin(:,1);
 
-%play sound file 
-sound(x,fs);
-disp("press any key to stop sound and resume code ")
-pause();
-clear sound;
 
-% Take the num of the cahnnel to send the sound on
-channel = input('Enter number of channel ');
-
-% sigma value of the noise
-sigma=input('Enter the value of sigma for noise ');
 
 
 % Transmiting
@@ -65,7 +57,21 @@ title('Signal Phase in frequency domain')
 % Plot signal with frequency domain
 subplot(4,1,4)
 plot(f,xf)
-title('Signal Phase in frequency domain')
+title('Signal in frequency domain')
+
+
+
+%play sound file 
+sound(x,fs);
+disp("press any key to stop sound and resume code ")
+pause();
+clear sound;
+
+% Take the num of the cahnnel to send the sound on
+channel = input('Enter number of channel ');
+
+
+
 
 % 2) Channel
 
@@ -145,25 +151,29 @@ title('Signal phase in freq. domain after Channel ')
 % Plot signal with frequency domain
 subplot(4,1,4)
 plot(f,yf)
-title('Signal Phase in frequency domain')
+title('Signal in frequency domain')
+
+
+sound(y,fs);
+disp("press any key to stop sound and resume code ")
+pause();
+clear sound;
+
+
+
+% sigma value of the noise
+sigma=input('Enter the value of sigma for noise ');
+
+
 
 % 3)Noise
 
 % Generate
 z = sigma*randn(len_y,1);
 
-size(y)
-size(z)
-
 % Add
-noise = y + z;
-y=noise;
+y = y + z';
 
-sound(y,fs);
-disp("press any key to stop sound and resume code ")
-pause();
-clear sound;
-% Plot with time
 
 figure(3)
 subplot(3,1,1)
@@ -185,9 +195,13 @@ title('sound file after adding noise in frequency domain')
 % Plot signal with frequency domain
 subplot(3,1,3)
 plot(f,yf)
-title('Signal Phase in frequency domain')
+title('Signal in frequency domain')
 
-
+sound(y,fs);
+disp("press any key to stop sound and resume code ")
+pause();
+clear sound;
+% Plot with time
 
 % 4) Receiver
 N = length(y);
@@ -198,10 +212,7 @@ yf([1:right_band left_band:N]) = 0;
 
 y = real(ifft(ifftshift(yf)));
 
-sound(y,fs);
-disp("press any key to stop sound and resume code ")
-pause();
-clear sound;
+
 
 % plot the sound file at receiver in time domain
 figure(4)
@@ -226,6 +237,10 @@ title('Phase pf sound file at receiver in frequency domain')
 % Plot signal with frequency domain
 subplot(4,1,4)
 plot(f,yf)
-title('Signal Phase in frequency domain')
+title('Signal in frequency domain')
 
 
+sound(y,fs);
+disp("press any key to stop sound and resume code ")
+pause();
+clear sound;
